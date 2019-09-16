@@ -9,9 +9,9 @@ import { NavigationEvents } from "react-navigation";
 import Loading from "../Components/UI/States/Loading";
 import { Notifications } from "expo";
 
-import * as Permissions from 'expo-permissions';
-import * as Location from 'expo-location';
-import MapView from 'react-native-maps';
+import * as Permissions from "expo-permissions";
+import * as Location from "expo-location";
+import MapView from "react-native-maps";
 
 /*
 Context API Consumer:
@@ -63,7 +63,7 @@ export default class ItemTracking extends Component {
     );
     if (permission.status !== "granted") {
       permission = await Permissions.askAsync(
-        Pemrissions.USER_FACING_NOTIFICATIONS
+        Permissions.USER_FACING_NOTIFICATIONS
       );
       if (permission.status !== "granted") {
         Alert.alert("Permission not granted for push notificiations");

@@ -25,7 +25,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "This repository consists of a modfied version of a mobile I made during my final year at University Centre Rotherham (UCR), it was created as part of a mobile application unit.\n\nPurpose:\n\nThe overall purpose of this React-native mobile application is to allow users to add a nd track items in relatime through GPS tracking.\n\nTo enable tracking items will need to be added to the shopping list, once items are present background tracking will be enabled. With an item being present in a shopping list it will now be tracked, once an item is present in a shopping list it will be tracked. Now when an item is found you will be alerted through the use of a push notification.\n\nFor a full breakdown of the mobile application features checkout the core features breakdown below.\n\nCore features:\n\nAs of the current version of the mobile application, it is currently capable of performing some of the following tasks (They will all be added soon):\n\n- Create a shopping list\n- Add an item to a shopping list\n- Edit items\n- Edit a shopping list\n- Edit the colour assigned to the shopping list (Coming soon)\n- GPS tracking via React-Native-Maps\n- Theming via Context API and Styled-Components ThemeProvider\n- Manage Local storage\n- Foreground push notifications\n- Show local supermarkets on the map (Coming soon, requires geo-clustering support)",
-    "githubUrl": "https://github.com/AlexMachin1997/Shopping-List-Assistant-With-Expo"
+    "description": ""
   }
 }

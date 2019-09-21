@@ -129,8 +129,6 @@ export default class ItemTracking extends Component {
   };
 
   watchLocation = async () => {
-    console.log("Your current location is being watched");
-
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== "granted") {
       console.log("Permission to access has been denied");
@@ -142,11 +140,13 @@ export default class ItemTracking extends Component {
       },
       async loc => {
         console.log(loc.coords);
-        await this.setState({
-          latitude: loc.coords.latitude,
-          longitude: loc.coords.longitude
-        });
-        this.checkSupermarketLocations();
+        this.setState(
+          {
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude
+          },
+          () => this.checkSupermarketLocations()
+        );
       }
     );
   };
@@ -158,11 +158,8 @@ export default class ItemTracking extends Component {
     // Permissions for push notifications (Only required for iOS)
     await this.obtainNotificationPermission();
 
-    // Only needed when you have hard coded locations
-    //this.checkSupermarketLocations();
-
     // Set loading to false
-    await this.setState(({ isLoading }) => ({
+    this.setState(({ isLoading }) => ({
       isLoading: !isLoading
     }));
   }

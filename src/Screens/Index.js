@@ -1,6 +1,5 @@
 // React dependencies
 import React, { Component } from "react";
-import { AsyncStorage } from "react-native";
 
 // Stateless components
 import Loading from "../Components/UI/States/Loading";
@@ -20,9 +19,11 @@ Usage:
 */
 import { Consumer } from "../Context";
 
+import { getItem } from "../Utils/AsyncStorage";
+
 export default class IndexScreen extends Component {
-  componentDidMount() {
-    this.statusCheck();
+  async componentDidMount() {
+    await this.statusCheck();
   }
 
   /* 
@@ -32,8 +33,12 @@ export default class IndexScreen extends Component {
   - Whilst the action is being performed show the spinner component
   */
   statusCheck = async () => {
-    const token = await AsyncStorage.getItem("hasVisited"); // Find the key named userToken
-    this.props.navigation.navigate(token ? "MainStack" : "WelcomeStack"); // Terniary operator to decide the stack the user goes to
+    try {
+      const token = await getItem("hasVisited"); // Find the key named userToken
+      this.props.navigation.navigate(token ? "MainStack" : "WelcomeStack"); // Terniary operator to decide the stack the user goes to
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {

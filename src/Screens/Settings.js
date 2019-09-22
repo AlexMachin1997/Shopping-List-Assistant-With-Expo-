@@ -1,6 +1,6 @@
 // React dependencies
 import React, { Component } from "react";
-import { ScrollView, Alert, AsyncStorage } from "react-native";
+import { ScrollView, Alert } from "react-native";
 
 // Higher-Order-Components (HOC)
 import { withTheme } from "styled-components";
@@ -28,7 +28,7 @@ Usage:
 */
 import { Consumer } from "../Context";
 
-import { getItem, setItem } from "../Utils/AsyncStorage";
+import { setItem, clearAll, deleteItem } from "../Utils/AsyncStorage";
 
 class Settings extends Component {
   state = {
@@ -92,7 +92,8 @@ class Settings extends Component {
                     isDeleteShoppingListsModalVisible: !isDeleteShoppingListsModalVisible
                   }));
 
-                  await AsyncStorage.removeItem("ShoppingLists");
+                  // await AsyncStorage.removeItem("ShoppingLists");
+                  await deleteItem("ShoppingLists");
 
                   // Sends an alert message (Used instead of push notifications)
                   Alert.alert(
@@ -100,8 +101,7 @@ class Settings extends Component {
                     "Your shopping lists have been cleared",
                     [
                       {
-                        text: "OK",
-                        onPress: () => console.log("Shopping lists cleared")
+                        text: "OK"
                       }
                     ],
 

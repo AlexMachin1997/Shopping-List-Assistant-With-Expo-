@@ -1,6 +1,5 @@
 // React dependencies
 import React, { Component } from "react";
-import { AsyncStorage } from "react-native";
 
 // Stateless components
 import Image from "../Components/Styled-Components/Images";
@@ -9,9 +8,11 @@ import Onboarding from "react-native-onboarding-swiper";
 // Higr-Order-Components (HOC)
 import { withTheme } from "styled-components";
 
+import { setItem } from "../Utils/AsyncStorage";
+
 class Welcome extends Component {
   generateToken = async () => {
-    await AsyncStorage.setItem("hasVisited", "true");
+    await setItem("hasVisited", "true");
     this.props.navigation.navigate("MainStack");
   };
 

@@ -1,6 +1,6 @@
 // React dependencies
 import React, { Component } from "react";
-import { ScrollView, AsyncStorage, Alert } from "react-native";
+import { ScrollView, Alert } from "react-native";
 
 // Higher-Order-Components (HOC)
 import { withTheme } from "styled-components";
@@ -27,6 +27,8 @@ Usage:
 </Consumer>
 */
 import { Consumer } from "../Context";
+
+import { setItem, clearAll, deleteItem } from "../Utils/AsyncStorage";
 
 class Settings extends Component {
   state = {
@@ -86,14 +88,12 @@ class Settings extends Component {
                   - Await for the set to be set (IMPORTANT)
                   - Without waiting the state wouldn't update in time.
                   */
-                  await this.setState(
-                    ({ isDeleteShoppingListsModalVisible }) => ({
-                      isDeleteShoppingListsModalVisible: !isDeleteShoppingListsModalVisible
-                    })
-                  );
+                  this.setState(({ isDeleteShoppingListsModalVisible }) => ({
+                    isDeleteShoppingListsModalVisible: !isDeleteShoppingListsModalVisible
+                  }));
 
-                  //
-                  await AsyncStorage.removeItem("ShoppingLists");
+                  // await AsyncStorage.removeItem("ShoppingLists");
+                  await deleteItem("ShoppingLists");
 
                   // Sends an alert message (Used instead of push notifications)
                   Alert.alert(
@@ -101,8 +101,7 @@ class Settings extends Component {
                     "Your shopping lists have been cleared",
                     [
                       {
-                        text: "OK",
-                        onPress: () => console.log("Shopping lists cleared")
+                        text: "OK"
                       }
                     ],
 
@@ -164,11 +163,8 @@ class Settings extends Component {
                         payload: value.isDark
                       });
 
-                      // Set isDakr equal to the inverted value
-                      await AsyncStorage.setItem(
-                        "isDark",
-                        JSON.stringify(!value.isDark)
-                      );
+                      // Set isDark equal to the inverted value
+                      await setItem("isDark", !value.isDark);
                     }}
                     color={this.props.theme.Tertiary}
                     style={{ marginLeft: 10 }}

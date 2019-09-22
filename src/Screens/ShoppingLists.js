@@ -1,6 +1,6 @@
 // React dependencies
 import React, { Component } from "react";
-import { ScrollView, AsyncStorage } from "react-native";
+import { ScrollView } from "react-native";
 
 // Screen Icon
 import EmptyIcon from "../../assets/Shocked.png";
@@ -31,10 +31,12 @@ Usage:
 </Consumer>
 */
 import { Consumer } from "../Context";
+import { getItem, setItem } from "../Utils/AsyncStorage";
 
 // Utility libraries
 import shortid from "shortid";
 import moment from "moment";
+import { Asset } from "expo-asset";
 
 class ShoppingLists extends Component {
   state = {
@@ -46,21 +48,21 @@ class ShoppingLists extends Component {
   };
 
   fetchShoppingLists = async () => {
-    await this.setState(({ isLoading }) => ({
+    this.setState(({ isLoading }) => ({
       isLoading: isLoading
     }));
 
-    // Perform an AsyncStroage request based on the key provided
-    const value = await AsyncStorage.getItem("ShoppingLists");
+    // Async/Await is required or the function returns undefined and it wouldn't be able to map through the state
+    const value = await getItem("ShoppingLists");
 
     // Check for a valid response ie the shopping lists must exist
     if (value) {
-      await this.setState({
-        shoppingLists: JSON.parse(value),
+      this.setState({
+        shoppingLists: value,
         isLoading: false
       });
     } else {
-      await this.setState({
+      this.setState({
         shoppingLists: [],
         isLoading: false
       });
@@ -68,8 +70,6 @@ class ShoppingLists extends Component {
   };
 
   componentDidMount() {
-    console.log("The shopping list screen has mounted");
-    // Fetch the current shopping lists from AsyncStorage
     this.fetchShoppingLists();
   }
 
@@ -79,7 +79,7 @@ class ShoppingLists extends Component {
 	- Only works for single state props like ShoppingListName for example
 	*/
   handleChange = async (id, value) => {
-    await this.setState({
+    this.setState({
       [id]: value
     });
   };
@@ -93,7 +93,7 @@ class ShoppingLists extends Component {
     - Add the new shopping list to the beginning of the array
     - This sets the isLoading to true whilst the shopping list is being created
     */
-    await this.setState(({ isLoading }) => ({
+    this.setState(({ isLoading }) => ({
       isLoading: !isLoading
     }));
 
@@ -122,26 +122,16 @@ class ShoppingLists extends Component {
         items: []
       };
 
-      // Adding the new data to the front of the array
-      await this.setState(({ shoppingLists }) => ({
-        shoppingLists: [...shoppingLists, shoppingListData]
-      }));
-
-      // Update shopping lists array
-      await AsyncStorage.setItem(
-        "ShoppingLists",
-        JSON.stringify(this.state.shoppingLists)
+      this.setState(
+        {
+          shoppingLists: [...this.state.shoppingLists, shoppingListData],
+          IsCreateShoppingModalVisible: false,
+          shoppingListName: "",
+          isShoppingListNameFocussed: false,
+          isLoading: false
+        },
+        async () => await setItem("ShoppingLists", this.state.shoppingLists)
       );
-
-      // Update the states with the values specified
-      await this.setState({
-        IsCreateShoppingModalVisible: false,
-        shoppingListName: "",
-        isShoppingListNameFocussed: false,
-        isLoading: false
-      });
-
-      console.log(this.state.shoppingLists);
     } catch (err) {
       console.log(err);
     }
@@ -161,8 +151,6 @@ class ShoppingLists extends Component {
     return (
       <Consumer>
         {value => {
-          console.log(value);
-
           return (
             <>
               <NavigationEvents onDidFocus={() => this.fetchShoppingLists()} />

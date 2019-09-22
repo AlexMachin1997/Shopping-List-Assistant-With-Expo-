@@ -1,6 +1,6 @@
 // React dependencies
 import React, { Component } from "react";
-import { ScrollView, AsyncStorage } from "react-native";
+import { ScrollView } from "react-native";
 
 // Higher-Order-Components (HOC)
 import { withTheme } from "styled-components";
@@ -33,6 +33,8 @@ Usage:
 */
 import { Consumer } from "../Context";
 
+import { getItem, setItem } from "../Utils/AsyncStorage";
+
 // Utility libraries
 import shortid from "shortid";
 import moment from "moment";
@@ -44,7 +46,6 @@ class ShoppingList extends Component {
     isRenameShoppingListModalVisible: false,
     isLoading: true,
     isDeleteShoppingListModalVisible: false,
-
     currentShoppingList: {},
     shoppingLists: [],
     itemName: "",
@@ -53,19 +54,19 @@ class ShoppingList extends Component {
 
   async componentDidMount() {
     // Set the current shopping list based on the data passed
-    await this.setState({
+    this.setState({
       currentShoppingList: this.props.navigation.getParam("ShoppingList") // Fetchs the React-Navigation param defined when the route was navigated to
     });
 
     // Fetching all shopping lists from AsyncStorage
-    const value = await AsyncStorage.getItem("ShoppingLists");
+    const value = await getItem("ShoppingLists");
     if (value) {
-      await this.setState({
-        shoppingLists: JSON.parse(value),
+      this.setState({
+        shoppingLists: value,
         isLoading: false
       });
     } else {
-      await this.setState({
+      this.setState({
         shoppingLists: [],
         isLoading: false
       });
@@ -74,7 +75,7 @@ class ShoppingList extends Component {
 
   // handleChange('isLoading', true)
   handleChange = async (id, value) => {
-    await this.setState({
+    this.setState({
       [id]: value
     });
   };
@@ -89,14 +90,12 @@ class ShoppingList extends Component {
         CurrentshoppingLists.splice(index, 1, this.state.currentShoppingList);
 
         // Update the state
-        await this.setState({
-          shoppingLists: CurrentshoppingLists
-        });
-
-        // Update shopping lists array
-        await AsyncStorage.setItem(
-          "ShoppingLists",
-          JSON.stringify(this.state.shoppingLists)
+        this.setState(
+          {
+            shoppingLists: CurrentshoppingLists
+          },
+          // Update shopping lists array
+          async () => await setItem("ShoppingLists", this.state.shoppingLists)
         );
       } else {
         return data;
@@ -106,7 +105,7 @@ class ShoppingList extends Component {
 
   addItem = async () => {
     //Hide the isAddItemsModalVisible:
-    await this.setState(({ isAddItemsModalVisible }) => ({
+    this.setState(({ isAddItemsModalVisible }) => ({
       isAddItemsModalVisible: !isAddItemsModalVisible
     }));
 
@@ -124,18 +123,17 @@ class ShoppingList extends Component {
     copiedCurrentShoppingList.items.push(shoppingListItemData);
 
     // Overwrites the currentShoppingList data with the copiedCurrentShoppingList
-    // Updates the current directory, important for causing a re-render of the array (IMPORTANT)
-    await this.setState({
-      currentShoppingList: copiedCurrentShoppingList,
-      itemName: ""
-    });
-
-    this.updateShoppingList();
+    // Updates the current directory, important for causing a re-render of the UI (IMPORTANT)
+    this.setState(
+      {
+        currentShoppingList: copiedCurrentShoppingList,
+        itemName: ""
+      },
+      async () => await this.updateShoppingList()
+    );
   };
 
   deleteItem = async id => {
-    console.log("Delete item function has ran");
-
     // Copy the current shopping list data (Don't directly modify the data)
     let copiedCurrentShoppingList = { ...this.state.currentShoppingList };
 
@@ -143,25 +141,25 @@ class ShoppingList extends Component {
     findIndex:
     - Finds the index based on the id
     - Requires 1 argument, an array item e.g. {name: "Beans", completed: false} 
-    - Returns an index, but if there is no index it will return -1
+    - Returns an index, but if there is no index it will return -1 (RACE CONDITION)
     */
-
     let indexOfItem = await copiedCurrentShoppingList.items.findIndex(
       item => item.id === id
     );
 
     await copiedCurrentShoppingList.items.splice(indexOfItem, 1);
 
-    await this.setState({
-      CurrentshoppingLists: copiedCurrentShoppingList
-    });
-
-    await this.updateShoppingList();
+    this.setState(
+      {
+        CurrentshoppingLists: copiedCurrentShoppingList
+      },
+      async () => await this.updateShoppingList()
+    );
   };
 
   updateShoppingListName = async () => {
     // Hide the isRenameShoppingListModalVisible
-    await this.setState(({ isRenameShoppingListModalVisible }) => ({
+    this.setState(({ isRenameShoppingListModalVisible }) => ({
       isRenameShoppingListModalVisible: !isRenameShoppingListModalVisible
     }));
 
@@ -171,17 +169,21 @@ class ShoppingList extends Component {
     // Set the modified objects name equal to the value from the modal input
     copiedCurrentShoppingList.name = this.state.newShoppingListName;
 
-    // Update the current shopping list
-    await this.setState({
-      currentShoppingList: copiedCurrentShoppingList
-    });
+    // Update the current shopping list state and internal storage
+    this.setState(
+      {
+        currentShoppingList: copiedCurrentShoppingList
+      },
+      async () => {
+        // Update the title param
+        this.props.navigation.setParams({
+          title: this.state.currentShoppingList.name
+        });
 
-    // Update the title param
-    this.props.navigation.setParams({
-      title: this.state.currentShoppingList.name
-    });
-
-    this.updateShoppingList();
+        // Update the shopping list in the devices storage
+        await this.updateShoppingList();
+      }
+    );
   };
 
   toggleComplete = async id => {
@@ -203,7 +205,7 @@ class ShoppingList extends Component {
 
     await copiedCurrentShoppingList.items.splice(indexOfItem, 1, item);
 
-    await this.setState({
+    this.setState({
       CurrentshoppingLists: copiedCurrentShoppingList
     });
 
@@ -211,7 +213,7 @@ class ShoppingList extends Component {
   };
 
   deleteShoppingList = async id => {
-    await this.setState(({ isDeleteShoppingListModalVisible }) => ({
+    this.setState(({ isDeleteShoppingListModalVisible }) => ({
       isDeleteShoppingListModalVisible: !isDeleteShoppingListModalVisible
     }));
 
@@ -219,17 +221,14 @@ class ShoppingList extends Component {
     let copiedCurrentShoppingLists = [...this.state.shoppingLists];
 
     // Find the index of them
-    let indexOfShoppingList = await copiedCurrentShoppingLists.findIndex(
+    let indexOfShoppingList = copiedCurrentShoppingLists.findIndex(
       list => list.id == id
     );
 
     copiedCurrentShoppingLists.splice(indexOfShoppingList, 1);
 
-    // Update shopping lists array
-    await AsyncStorage.setItem(
-      "ShoppingLists",
-      JSON.stringify(copiedCurrentShoppingLists)
-    );
+    // Update the shopping lists
+    setItem("ShoppingLists", copiedCurrentShoppingLists);
 
     // Redirect
     this.props.navigation.navigate("Tabs");

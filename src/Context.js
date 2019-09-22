@@ -1,6 +1,7 @@
 // React dependencies
 import React, { Component } from "react";
-import { AsyncStorage } from "react-native";
+
+import { getItem } from "./Utils/AsyncStorage";
 
 // Creating the context for the app
 const Context = React.createContext();
@@ -32,15 +33,15 @@ export class Provider extends Component {
 
   async componentDidMount() {
     // Perform a key-value lookup
-    let data = await AsyncStorage.getItem("isDark");
+    let data = await getItem("isDark");
 
     // Check for a truthy or falsey value in AsyncStorage
     if (data) {
-      await this.setState({
-        isDark: JSON.parse(data)
+      this.setState({
+        isDark: data
       });
     } else {
-      await this.setState({
+      this.setState({
         isDark: false
       });
     }

@@ -19,35 +19,6 @@ To enable tracking items will need to be added to the shopping list, once items 
 
 For a full breakdown of the mobile application features checkout the core features breakdown below.
 
-## Core features
-
-As of the current version of the mobile application, it is currently capable of performing some of the following tasks (They will all be added soon):
-
-- Create a shopping list
-- Add an item to a shopping list
-- Edit items
-- Edit a shopping list
-- Edit the colour assigned to the shopping list (Coming soon)
-- GPS tracking via React-Native-Maps
-- Theming via Context API and Styled-Components ThemeProvider
-- Manage Local storage
-- Foreground push notifications
-- Show local supermarkets on the map (Coming soon, requires geo-clustering support)
-
-## Technologies used:
-
-- [Expo](https://docs.expo.io/versions/v32.0.0/)
-- [React](https://reactjs.org/)
-- [React-Native](https://facebook.github.io/react-native/)
-- [MomentJS](https://github.com/moment/moment/)
-- [Proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
-- [React-native-onboarding-swiper](react-native-onboarding-swiper)
-- [React-native-paper](https://github.com/callstack/react-native-paper)
-- [React Navigation](https://reactnavigation.org/)
-- [React-navigation-material-bottom-tabs](https://github.com/react-navigation/react-navigation-material-bottom-tabs)
-- [ShortID](https://github.com/dylang/shortid)
-- [Styled-components](https://github.com/styled-components/styled-components)
-
 ## Getting started
 
 - Clone the project to your development environment by using `git clone https://github.com/AlexMachin1997/Shopping-List-Assistant-With-Expo`
@@ -69,6 +40,24 @@ As of the current version of the mobile application, it is currently capable of 
   - Run `expo start` (This will take a long time on the inital build, but the second time around it will take seconds)
   - The project and Expo dev tolls will then load. You have successfully setup the mobile development enviroment
 
+## Technologies used:
+
+- [Expo](https://docs.expo.io/versions/v32.0.0/)
+- [Expo-Location](https://docs.expo.io/versions/latest/sdk/location/)
+- [Expo-permissions](https://docs.expo.io/versions/latest/sdk/permissions/)
+- [Expo-secure-store](https://docs.expo.io/versions/latest/sdk/securestore/)
+- [MomentJS](https://github.com/moment/moment/)
+- [Proptypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
+- [React](https://reactjs.org/)
+- [React-Native](https://facebook.github.io/react-native/)
+- [React-Native-Maps](https://github.com/react-native-community/react-native-maps)
+- [React-native-onboarding-swiper](react-native-onboarding-swiper)
+- [React-native-paper](https://github.com/callstack/react-native-paper)
+- [React Navigation](https://reactnavigation.org/)
+- [React-navigation-material-bottom-tabs](https://github.com/react-navigation/react-navigation-material-bottom-tabs)
+- [ShortID](https://github.com/dylang/shortid)
+- [Styled-components](https://github.com/styled-components/styled-components)
+
 ## Contributing
 
 ### Reporting issues
@@ -78,6 +67,40 @@ If you find any problems while using the API, report them [here](https://github.
 ### Feature requests
 
 If you would like to request features for future versions of the application again, please post them [here](https://github.com/AlexMachin1997/Food-Allergy-Mobile-Application/issues). When posting ideas ensure the functionality is explained to provide any developers contributing to the project know what to implement.
+
+## Todo list
+
+### Features Todo list
+
+[x] Create shopping lists
+[x] Delete shopping lists
+[x] Edit shopping list names
+[x] Add items to shopping list
+[x] Add user-friendly modals to show success errors
+[x] Show error, loading, success states
+[x] Geo-location tracking via either RN or Expo modules
+[x] Integrate React-Native-Maps
+[x] Add basic routing via React-Navigation
+[x] Add Push notification support
+[ ] Integrate Geo-Clustering engine to allow more than 100 markers to spawn
+[ ] Remove the hardcoded locations from the JSON and integrate google maps to extract all common food items
+
+### Code Maintenance
+
+[X] Upgrade to React 16.8.3
+[ ] Add hooks support
+[ ] Update the SDK from v32 to v33
+[ ] Update SDK from v33 to v35
+[ ] Integrate hooks with the context API
+[X] Refactor setState, remove the nasty await as it doesnt return a promise and use the callback approach
+[ ] Update React-Navigation (PAIN IN THE ASS PART)
+[x] Extract storage handling into reusable modules
+[ ] Extract permissions into reusable modules
+[ ] Extract time generation into it's own reusable module
+[ ] Improve error handling for permissions, specifically the GPS and push notifications
+[ ] Test for race conditions e.g. Storage limit reached etc
+[ ] Add unit and/or integration testing
+[ ] Make the application more modular
 
 # Project Information
 
@@ -92,7 +115,7 @@ If you want to connect with me on my professional social network platforms feel 
 
 ### Mobile app version
 
-The application is currently at version 1.0, with each feature added it will increment based on these [guidelines](https://docs.npmjs.com/about-semantic-versioning)
+The application is currently at version 1.1, with each feature added it will increment based on these [guidelines](https://docs.npmjs.com/about-semantic-versioning)
 
 ### Project Licence information
 

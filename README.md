@@ -72,35 +72,35 @@ If you would like to request features for future versions of the application aga
 
 ### Features Todo list
 
-[x] Create shopping lists
-[x] Delete shopping lists
-[x] Edit shopping list names
-[x] Add items to shopping list
-[x] Add user-friendly modals to show success errors
-[x] Show error, loading, success states
-[x] Geo-location tracking via either RN or Expo modules
-[x] Integrate React-Native-Maps
-[x] Add basic routing via React-Navigation
-[x] Add Push notification support
-[ ] Integrate Geo-Clustering engine to allow more than 100 markers to spawn
-[ ] Remove the hardcoded locations from the JSON and integrate google maps to extract all common food items
+- [x] Create shopping lists
+- [x] Delete shopping lists
+- [x] Edit shopping list names
+- [x] Add items to shopping list
+- [x] Add user-friendly modals to show error, success and loading state
+- [x] Show error, loading, success states
+- [x] Geo-location tracking via either RN or Expo modules
+- [x] Integrate React-Native-Maps
+- [x] Add basic routing via React-Navigation
+- [x] Add Push notification support
+- [ ] Integrate Geo-Clustering engine to allow more than 100 markers to spawn
+- [ ] Remove the hardcoded locations from the JSON and integrate google maps to extract all common food items
 
 ### Code Maintenance
 
-[X] Upgrade to React 16.8.3
-[ ] Add hooks support
-[ ] Update the SDK from v32 to v33
-[ ] Update SDK from v33 to v35
-[ ] Integrate hooks with the context API
-[X] Refactor setState, remove the nasty await as it doesnt return a promise and use the callback approach
-[ ] Update React-Navigation (PAIN IN THE ASS PART)
-[x] Extract storage handling into reusable modules
-[ ] Extract permissions into reusable modules
-[ ] Extract time generation into it's own reusable module
-[ ] Improve error handling for permissions, specifically the GPS and push notifications
-[ ] Test for race conditions e.g. Storage limit reached etc
-[ ] Add unit and/or integration testing
-[ ] Make the application more modular
+- [x] Upgrade to React 16.8.3
+- [ ] Add hooks support
+- [ ] Update the SDK from v32 to v33
+- [ ] Update SDK from v33 to v35
+- [ ] Integrate hooks with the context API
+- [x] Refactor setState, remove the nasty await as it doesnt return a promise and use the callback approach
+- [ ] Update React-Navigation (PAIN IN THE ASS PART)
+- [x] Extract storage handling into reusable modules
+- [ ] Extract permissions into reusable modules
+- [ ] Extract time generation into it's own reusable module
+- [ ] Improve error handling for permissions, specifically the GPS and push notifications
+- [ ] Test for race conditions e.g. Storage limit reached etc
+- [ ] Add unit and/or integration testing
+- [ ] Make the application more modular
 
 # Project Information
 

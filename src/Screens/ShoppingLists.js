@@ -44,12 +44,12 @@ class ShoppingLists extends Component {
     isLoading: true,
     shoppingListName: "",
     shoppingLists: [],
-    shoppingListTheme: ""
+    shoppingListTheme: "",
   };
 
   fetchShoppingLists = async () => {
     this.setState(({ isLoading }) => ({
-      isLoading: isLoading
+      isLoading: isLoading,
     }));
 
     // Async/Await is required or the function returns undefined and it wouldn't be able to map through the state
@@ -59,12 +59,12 @@ class ShoppingLists extends Component {
     if (value) {
       this.setState({
         shoppingLists: value,
-        isLoading: false
+        isLoading: false,
       });
     } else {
       this.setState({
         shoppingLists: [],
-        isLoading: false
+        isLoading: false,
       });
     }
   };
@@ -73,14 +73,14 @@ class ShoppingLists extends Component {
     this.fetchShoppingLists();
   }
 
-  /* 
+  /*
 	handleChange:
 	- Generic state handler
 	- Only works for single state props like ShoppingListName for example
 	*/
   handleChange = async (id, value) => {
     this.setState({
-      [id]: value
+      [id]: value,
     });
   };
 
@@ -94,10 +94,10 @@ class ShoppingLists extends Component {
     - This sets the isLoading to true whilst the shopping list is being created
     */
     this.setState(({ isLoading }) => ({
-      isLoading: !isLoading
+      isLoading: !isLoading,
     }));
 
-    /* 
+    /*
     shoppingListThemes:
     - The material colours defined above are added to the array to form an array of strings
     - They are originally seperate variables as remebering all the colours became a task
@@ -119,7 +119,7 @@ class ShoppingLists extends Component {
         name: this.state.shoppingListName,
         createdOn: moment().format("Do MMMM YYYY"),
         shoppingListTheme: randomTheme,
-        items: []
+        items: [],
       };
 
       this.setState(
@@ -128,7 +128,7 @@ class ShoppingLists extends Component {
           IsCreateShoppingModalVisible: false,
           shoppingListName: "",
           isShoppingListNameFocussed: false,
-          isLoading: false
+          isLoading: false,
         },
         async () => await setItem("ShoppingLists", this.state.shoppingLists)
       );
@@ -141,7 +141,7 @@ class ShoppingLists extends Component {
     if (this.state.isLoading) {
       return (
         <Consumer>
-          {value => {
+          {(value) => {
             return <Loading isDark={value.isDark} />;
           }}
         </Consumer>
@@ -150,7 +150,7 @@ class ShoppingLists extends Component {
 
     return (
       <Consumer>
-        {value => {
+        {(value) => {
           return (
             <>
               <NavigationEvents onDidFocus={() => this.fetchShoppingLists()} />
@@ -162,14 +162,14 @@ class ShoppingLists extends Component {
                 onDismiss={() =>
                   this.setState({
                     IsCreateShoppingModalVisible: !this.state
-                      .IsCreateShoppingModalVisible
+                      .IsCreateShoppingModalVisible,
                   })
                 }
                 onCancel={() =>
                   this.setState({
                     IsCreateShoppingModalVisible: !this.state
                       .IsCreateShoppingModalVisible,
-                    shoppingListName: ""
+                    shoppingListName: "",
                   })
                 }
                 onOk={this.createShoppingList}
@@ -178,7 +178,7 @@ class ShoppingLists extends Component {
                 <TextInput
                   placeholder="Enter a shopping list name"
                   value={this.state.text}
-                  onChangeText={value =>
+                  onChangeText={(value) =>
                     this.handleChange("shoppingListName", value)
                   }
                   underlineColor="transparent"
@@ -193,7 +193,7 @@ class ShoppingLists extends Component {
                   flexGrow: 1,
                   backgroundColor: value.isDark
                     ? this.props.theme.Primary
-                    : this.props.theme.Secondary
+                    : this.props.theme.Secondary,
                 }}
               >
                 {this.state.shoppingLists.length < 1 ? (
@@ -215,7 +215,7 @@ class ShoppingLists extends Component {
                           // Passing data to the ShoppingList component
                           this.props.navigation.navigate("ShoppingList", {
                             ShoppingList: data,
-                            title: data.name
+                            title: data.name,
                           })
                         }
                       />
@@ -231,7 +231,7 @@ class ShoppingLists extends Component {
                 }
                 action={() =>
                   this.setState({
-                    IsCreateShoppingModalVisible: true
+                    IsCreateShoppingModalVisible: true,
                   })
                 }
               />

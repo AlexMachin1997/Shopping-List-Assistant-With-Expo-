@@ -1,9 +1,10 @@
 {
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 17224,
-  "expoServerNgrokUrl": "https://px-np6.alexmachin1997.shopping-list-assistant-with-expo.exp.direct",
-  "packagerNgrokUrl": "https://packager.px-np6.alexmachin1997.shopping-list-assistant-with-expo.exp.direct",
-  "ngrokPid": 2764
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "webpackServerPort": null
 }

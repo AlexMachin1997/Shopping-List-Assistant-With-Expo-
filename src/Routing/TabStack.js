@@ -11,7 +11,7 @@ import ItemTrackingScreen from "../Screens/ItemTracking";
 // Icon libaries
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
-/* 
+/*
 
 SearchStack:
 - Creates a stack which can be traversered via props when active
@@ -26,7 +26,7 @@ Tab config:
 - BarStyle sets the backgroundColour which is currently blue
 
 */
-export default (TabStack = createMaterialBottomTabNavigator(
+export default TabStack = createMaterialBottomTabNavigator(
   {
     ShoppingLists: {
       screen: ShoppingListsScreen,
@@ -38,8 +38,8 @@ export default (TabStack = createMaterialBottomTabNavigator(
             size={25}
             color="#CCDBDC"
           />
-        )
-      }
+        ),
+      },
     },
     TrackItem: {
       screen: ItemTrackingScreen,
@@ -47,9 +47,9 @@ export default (TabStack = createMaterialBottomTabNavigator(
         tabBarLabel: "Find items",
         tabBarIcon: () => (
           <MaterialIcons name="location-on" size={25} color="#CCDBDC" />
-        )
-      }
-    }
+        ),
+      },
+    },
   },
   {
     navigationOptions: ({ navigation }) => {
@@ -58,14 +58,14 @@ export default (TabStack = createMaterialBottomTabNavigator(
       // ShoppingLists tab, when the route equals routeName set the headerTitle equal to the specified title
       if (routeName == "ShoppingLists") {
         return {
-          headerTitle: "Shopping Lists"
+          headerTitle: "Shopping Lists",
         };
       }
 
       // TrackItems tab, when the route equals routeName set the headerTitle equal to the specified title
       if (routeName == "TrackItem") {
         return {
-          headerTitle: "Find items"
+          headerTitle: "Find items",
         };
       }
     },
@@ -76,11 +76,11 @@ export default (TabStack = createMaterialBottomTabNavigator(
       backgroundColor: "#003249",
       borderTopColor: "#CCDBDC",
       borderWidth: 2,
-      borderStyle: "solid"
+      borderStyle: "solid",
     },
     shifting: true,
     tabBarOptions: {
-      scrollEnabled: true
-    }
+      scrollEnabled: true,
+    },
   }
-));
+);

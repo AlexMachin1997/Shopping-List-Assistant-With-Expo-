@@ -1,4 +1,4 @@
-/* 
+/*
 Section:
 - Import the styled variable from styled-components/native
 
@@ -22,11 +22,11 @@ import styled from "styled-components/native";
 import proptypes from "proptypes";
 
 const Section = styled.View`
-  flex-direction: ${props => (props.row ? "row" : "column")}
-  justify-content: ${props => props.justifyContent}
-  align-items: ${props => props.alignItems}
-  flex-wrap: ${props => props.flexWrap}
-  background-color: ${props => {
+  flex-direction: ${(props) => (props.row ? "row" : "column")}
+  justify-content: ${(props) => props.justifyContent}
+  align-items: ${(props) => props.alignItems}
+  flex-wrap: ${(props) => props.flexWrap}
+  background-color: ${(props) => {
     if (props.backgroundColour) {
       return props.backgroundColour;
     } else {
@@ -37,24 +37,24 @@ const Section = styled.View`
       }
     }
   }}
-  flex-grow: ${props => props.flexGrow}
+  flex-grow: ${(props) => props.flexGrow}
 
-  border-width: ${props => props.borderWidth};
-  border-style: ${props => props.borderStyle};
-  border-color: ${props => props.borderColour};
+  border-width: ${(props) => props.borderWidth};
+  border-style: ${(props) => props.borderStyle};
+  border-color: ${(props) => props.borderColour};
 
-  padding-top: ${props => props.paddingTop};
-  padding-bottom: ${props => props.paddingBottom};
-  padding-right: ${props => props.paddingRight};
-  padding-left: ${props => props.paddingLeft};
+  padding-top: ${(props) => props.paddingTop};
+  padding-bottom: ${(props) => props.paddingBottom};
+  padding-right: ${(props) => props.paddingRight};
+  padding-left: ${(props) => props.paddingLeft};
 
-  margin-top: ${props => props.marginTop};
-  margin-bottom: ${props => props.marginBottom};
-  margin-right: ${props => props.marginRight};
-  margin-left: ${props => props.marginLeft};
+  margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom};
+  margin-right: ${(props) => props.marginRight};
+  margin-left: ${(props) => props.marginLeft};
 `;
 
-/* 
+/*
 defaultProps:
 - Assigns default props to the componet, they only apply when a prop is not provided.
 - https://reactjs.org/docs/react-without-es6.html#declaring-default-props
@@ -62,7 +62,7 @@ defaultProps:
 Section.defaultProps = {
   justifyContent: "flex-start",
   alignItems: "flex-start",
-  flexWrap: "wrap",
+  flexWrap: "nowrap",
   flexGrow: 0,
 
   borderWidth: 0,
@@ -77,7 +77,7 @@ Section.defaultProps = {
   marginTop: 0,
   marginBottom: 0,
   marginRight: 0,
-  marginLeft: 0
+  marginLeft: 0,
 };
 
 /*
@@ -101,7 +101,7 @@ Section.proptypes = {
   marginTop: proptypes.number.isRequired,
   marginBottom: proptypes.number.isRequired,
   marginLeft: proptypes.number.isRequired,
-  marginRight: proptypes.number.isRequired
+  marginRight: proptypes.number.isRequired,
 };
 
 export default Section;

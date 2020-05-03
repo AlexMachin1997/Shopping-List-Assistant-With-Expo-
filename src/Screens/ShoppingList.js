@@ -49,13 +49,13 @@ class ShoppingList extends Component {
     currentShoppingList: {},
     shoppingLists: [],
     itemName: "",
-    newShoppingListName: ""
+    newShoppingListName: "",
   };
 
   async componentDidMount() {
     // Set the current shopping list based on the data passed
     this.setState({
-      currentShoppingList: this.props.navigation.getParam("ShoppingList") // Fetchs the React-Navigation param defined when the route was navigated to
+      currentShoppingList: this.props.navigation.getParam("ShoppingList"), // Fetchs the React-Navigation param defined when the route was navigated to
     });
 
     // Fetching all shopping lists from AsyncStorage
@@ -63,12 +63,12 @@ class ShoppingList extends Component {
     if (value) {
       this.setState({
         shoppingLists: value,
-        isLoading: false
+        isLoading: false,
       });
     } else {
       this.setState({
         shoppingLists: [],
-        isLoading: false
+        isLoading: false,
       });
     }
   }
@@ -76,7 +76,7 @@ class ShoppingList extends Component {
   // handleChange('isLoading', true)
   handleChange = async (id, value) => {
     this.setState({
-      [id]: value
+      [id]: value,
     });
   };
 
@@ -92,7 +92,7 @@ class ShoppingList extends Component {
         // Update the state
         this.setState(
           {
-            shoppingLists: CurrentshoppingLists
+            shoppingLists: CurrentshoppingLists,
           },
           // Update shopping lists array
           async () => await setItem("ShoppingLists", this.state.shoppingLists)
@@ -106,14 +106,14 @@ class ShoppingList extends Component {
   addItem = async () => {
     //Hide the isAddItemsModalVisible:
     this.setState(({ isAddItemsModalVisible }) => ({
-      isAddItemsModalVisible: !isAddItemsModalVisible
+      isAddItemsModalVisible: !isAddItemsModalVisible,
     }));
 
     let shoppingListItemData = {
       id: shortid.generate(),
       name: this.state.itemName,
       createdOn: moment().format("Do MMMM YYYY"),
-      completed: false
+      completed: false,
     };
 
     // Copy the current shopping list data (Don't directly modify the data)
@@ -127,31 +127,31 @@ class ShoppingList extends Component {
     this.setState(
       {
         currentShoppingList: copiedCurrentShoppingList,
-        itemName: ""
+        itemName: "",
       },
       async () => await this.updateShoppingList()
     );
   };
 
-  deleteItem = async id => {
+  deleteItem = async (id) => {
     // Copy the current shopping list data (Don't directly modify the data)
     let copiedCurrentShoppingList = { ...this.state.currentShoppingList };
 
-    /* 
+    /*
     findIndex:
     - Finds the index based on the id
-    - Requires 1 argument, an array item e.g. {name: "Beans", completed: false} 
+    - Requires 1 argument, an array item e.g. {name: "Beans", completed: false}
     - Returns an index, but if there is no index it will return -1 (RACE CONDITION)
     */
     let indexOfItem = await copiedCurrentShoppingList.items.findIndex(
-      item => item.id === id
+      (item) => item.id === id
     );
 
     await copiedCurrentShoppingList.items.splice(indexOfItem, 1);
 
     this.setState(
       {
-        CurrentshoppingLists: copiedCurrentShoppingList
+        CurrentshoppingLists: copiedCurrentShoppingList,
       },
       async () => await this.updateShoppingList()
     );
@@ -160,7 +160,7 @@ class ShoppingList extends Component {
   updateShoppingListName = async () => {
     // Hide the isRenameShoppingListModalVisible
     this.setState(({ isRenameShoppingListModalVisible }) => ({
-      isRenameShoppingListModalVisible: !isRenameShoppingListModalVisible
+      isRenameShoppingListModalVisible: !isRenameShoppingListModalVisible,
     }));
 
     // Copy the current shopping list data (Don't directly modify the data)
@@ -172,12 +172,12 @@ class ShoppingList extends Component {
     // Update the current shopping list state and internal storage
     this.setState(
       {
-        currentShoppingList: copiedCurrentShoppingList
+        currentShoppingList: copiedCurrentShoppingList,
       },
       async () => {
         // Update the title param
         this.props.navigation.setParams({
-          title: this.state.currentShoppingList.name
+          title: this.state.currentShoppingList.name,
         });
 
         // Update the shopping list in the devices storage
@@ -186,19 +186,19 @@ class ShoppingList extends Component {
     );
   };
 
-  toggleComplete = async id => {
+  toggleComplete = async (id) => {
     // Copy the current shopping list data (Don't directly modify the data)
     let copiedCurrentShoppingList = { ...this.state.currentShoppingList };
 
-    /* 
+    /*
     findIndex:
     - Finds the index based on the id
-    - Requires 1 argument, an array item e.g. {name: "Beans", completed: false} 
+    - Requires 1 argument, an array item e.g. {name: "Beans", completed: false}
     - Returns an index, but if there is no index it will return -1
 
     */
     let indexOfItem = await copiedCurrentShoppingList.items.findIndex(
-      item => item.id === id
+      (item) => item.id === id
     );
     let item = copiedCurrentShoppingList.items[indexOfItem];
     item.completed = !item.completed;
@@ -206,15 +206,15 @@ class ShoppingList extends Component {
     await copiedCurrentShoppingList.items.splice(indexOfItem, 1, item);
 
     this.setState({
-      CurrentshoppingLists: copiedCurrentShoppingList
+      CurrentshoppingLists: copiedCurrentShoppingList,
     });
 
     this.updateShoppingList();
   };
 
-  deleteShoppingList = async id => {
+  deleteShoppingList = async (id) => {
     this.setState(({ isDeleteShoppingListModalVisible }) => ({
-      isDeleteShoppingListModalVisible: !isDeleteShoppingListModalVisible
+      isDeleteShoppingListModalVisible: !isDeleteShoppingListModalVisible,
     }));
 
     // Copy current list
@@ -222,7 +222,7 @@ class ShoppingList extends Component {
 
     // Find the index of them
     let indexOfShoppingList = copiedCurrentShoppingLists.findIndex(
-      list => list.id == id
+      (list) => list.id == id
     );
 
     copiedCurrentShoppingLists.splice(indexOfShoppingList, 1);
@@ -234,7 +234,7 @@ class ShoppingList extends Component {
     this.props.navigation.navigate("Tabs");
   };
 
-  /* 
+  /*
   navigationOptions:
   - These are the inital properties, they will be updated
   - Has access to the navigation object, which allows the params to be accessed
@@ -251,7 +251,7 @@ class ShoppingList extends Component {
           action={() => navigation.goBack()}
           marginLeft={10}
         />
-      )
+      ),
     };
   };
 
@@ -259,7 +259,7 @@ class ShoppingList extends Component {
     if (this.state.isLoading) {
       return (
         <Consumer>
-          {value => {
+          {(value) => {
             return <Loading isDark={value.isDark} />;
           }}
         </Consumer>
@@ -268,7 +268,7 @@ class ShoppingList extends Component {
 
     return (
       <Consumer>
-        {value => {
+        {(value) => {
           return (
             <>
               <ActionButtons
@@ -277,24 +277,24 @@ class ShoppingList extends Component {
                 isRenameModalVisible={() =>
                   this.setState({
                     isRenameShoppingListModalVisible: true,
-                    newShoppingListName: this.state.currentShoppingList.name
+                    newShoppingListName: this.state.currentShoppingList.name,
                   })
                 }
                 deleteListAction={() =>
                   this.setState({
                     isDeleteShoppingListModalVisible: !this.state
-                      .isDeleteShoppingListModalVisible
+                      .isDeleteShoppingListModalVisible,
                   })
                 }
                 addItemAction={() =>
                   this.setState({
-                    isAddItemsModalVisible: true
+                    isAddItemsModalVisible: true,
                   })
                 }
                 onStateChange={() =>
                   this.setState({
                     isFloatingActionButtonsVisible: !this.state
-                      .isFloatingActionButtonsVisible
+                      .isFloatingActionButtonsVisible,
                   })
                 }
               />
@@ -303,13 +303,13 @@ class ShoppingList extends Component {
                 title="Create an item"
                 onDismiss={() =>
                   this.setState({
-                    isAddItemsModalVisible: !this.state.isAddItemsModalVisible
+                    isAddItemsModalVisible: !this.state.isAddItemsModalVisible,
                   })
                 }
                 onCancel={() =>
                   this.setState({
                     isAddItemsModalVisible: !this.state.isAddItemsModalVisible,
-                    itemName: ""
+                    itemName: "",
                   })
                 }
                 onOk={() => this.addItem()}
@@ -319,7 +319,7 @@ class ShoppingList extends Component {
                 <TextInput
                   placeholder="Enter an item name"
                   value={this.state.itemName}
-                  onChangeText={value => this.handleChange("itemName", value)}
+                  onChangeText={(value) => this.handleChange("itemName", value)}
                   underlineColor="transparent"
                   mode="flat"
                 />
@@ -332,14 +332,14 @@ class ShoppingList extends Component {
                   this.setState({
                     isRenameShoppingListModalVisible: !this.state
                       .isRenameShoppingListModalVisible,
-                    newShoppingListName: ""
+                    newShoppingListName: "",
                   })
                 }
                 onCancel={() =>
                   this.setState({
                     isRenameShoppingListModalVisible: !this.state
                       .isRenameShoppingListModalVisible,
-                    newShoppingListName: ""
+                    newShoppingListName: "",
                   })
                 }
                 onOk={() => this.updateShoppingListName()}
@@ -351,7 +351,7 @@ class ShoppingList extends Component {
                 <TextInput
                   placeholder="Enter an item name"
                   value={this.state.newShoppingListName}
-                  onChangeText={value =>
+                  onChangeText={(value) =>
                     this.handleChange("newShoppingListName", value)
                   }
                   underlineColor="transparent"
@@ -365,13 +365,13 @@ class ShoppingList extends Component {
                 onDismiss={() =>
                   this.setState({
                     isDeleteShoppingListModalVisible: !this.state
-                      .isDeleteShoppingListModalVisible
+                      .isDeleteShoppingListModalVisible,
                   })
                 }
                 onCancel={() =>
                   this.setState({
                     isDeleteShoppingListModalVisible: !this.state
-                      .isDeleteShoppingListModalVisible
+                      .isDeleteShoppingListModalVisible,
                   })
                 }
                 onOk={() =>
@@ -401,7 +401,7 @@ class ShoppingList extends Component {
                   backgroundColor: value.isDark
                     ? this.props.theme.Primary
                     : this.props.theme.Secondary,
-                  paddingBottom: 70
+                  paddingBottom: 70,
                 }}
               >
                 {this.state.currentShoppingList.items.length < 1 ? (

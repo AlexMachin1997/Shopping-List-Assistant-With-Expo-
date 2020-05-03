@@ -1,5 +1,5 @@
 // React dependencies
-import React from "react";
+import React, { Component } from "react";
 import { View } from "react-native";
 
 // Stateless components
@@ -16,7 +16,7 @@ const ShoppingList = ({
   isComplete,
   name,
   isDark,
-  deleteAction
+  deleteAction,
 }) => {
   return (
     <TouchableRipple onPress={toggle} rippleColor={shoppingListTheme}>

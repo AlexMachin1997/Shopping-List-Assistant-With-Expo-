@@ -60,16 +60,18 @@ const PaperTheme = {
   }
 };
 
-export default class App extends Component {
-  render() {
-    return (
-      <Provider>
-        <ThemeProvider theme={StyledComponentsTheme}>
-          <PaperProvider theme={PaperTheme}>
+import {CustomThemeProvider} from './src/Context/CustomThemeContext';
+
+const App = () => (
+  <Provider>
+    <CustomThemeProvider>
+      <ThemeProvider theme={StyledComponentsTheme}>
+        <PaperProvider theme={PaperTheme}>
             <AppContainer />
-          </PaperProvider>
-        </ThemeProvider>
-      </Provider>
-    );
-  }
-}
+        </PaperProvider>
+      </ThemeProvider>
+    </CustomThemeProvider>
+  </Provider>
+)
+
+export default App;

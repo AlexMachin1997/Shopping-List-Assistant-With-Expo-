@@ -21,6 +21,7 @@ export const getItem = async key => {
     return JSON.parse(data);
   } catch (error) {
     console.log(error);
+    return [];
   }
 };
 

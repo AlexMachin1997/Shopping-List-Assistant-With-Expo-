@@ -108,7 +108,7 @@ const ShoppingLists = () => {
 
   return (
     <>
-    <NavigationEvents onDidFocus={fetchShoppingLists} />
+    <NavigationEvents onDidFocus={() => fetchShoppingLists()} />
 
     <Modal
       isDark={isDark}

@@ -5,18 +5,16 @@ const CustomThemeContext = createContext();
 
 export const CustomThemeProvider = ({children}) => {
   const [isDark, setIsDark] = useState(null);
-  
 
   useEffect(() => {
     // Get the shopping lists from storage 
     const storage = async () => {
-      // Get the items
+      // Get or set the item
       if(isDark === null) {
         const res = await getItem('isDark');
         setIsDark(res);
       } else {
         await setItem('isDark', isDark);
-        setIsDark(isDark);
       }
     }
 

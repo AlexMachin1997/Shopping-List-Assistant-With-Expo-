@@ -4,7 +4,7 @@ import { ScrollView, Alert } from "react-native";
 import { useNavigation} from 'react-navigation-hooks'
 
 // Higher-Order-Components (HOC)
-import { withTheme, useTheme, ThemeContext } from "styled-components";
+import { useTheme, ThemeContext } from "styled-components";
 
 // Stateless components
 import Section from "../Components/Styled-Components/Section";

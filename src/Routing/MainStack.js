@@ -1,7 +1,8 @@
 import React from "react";
 
 // React-Navigation dependencies
-import { createStackNavigator, createDrawerNavigator } from "react-navigation";
+import {createDrawerNavigator } from "react-navigation-drawer";
+import {createStackNavigator} from 'react-navigation-stack';
 
 //Importing screens and tabs
 import TabStack from "./TabStack";

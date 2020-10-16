@@ -8,7 +8,6 @@ import EmptyIcon from "../../assets/Shocked.png";
 
 // Higher-order-components
 import { ThemeContext } from "styled-components";
-import { NavigationEvents } from "react-navigation";
 
 // Stateless components
 import Empty from "../Components/UI/States/Empty";
@@ -115,8 +114,6 @@ const ShoppingLists = () => {
 
   return (
     <>
-    <NavigationEvents onDidFocus={() => fetchShoppingLists()} />
-
     <Modal
       isDark={isDark}
       visible={isCreateShoppingModalVisible}
